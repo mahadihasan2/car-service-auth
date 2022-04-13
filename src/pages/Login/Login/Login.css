@@ -1,0 +1,20 @@
+.from-text{
+    text-align: center;
+}
+.container{
+    margin-top: 20px;
+}
+.form-control{
+  display: block;
+  width: 50%;
+  margin: auto;
+  padding: 20px;
+  background-color: aqua;
+ 
+}
+.form-control input{
+    width: 90%;
+    margin: 20px;
+    padding: 10px;
+    border: none;
+}
