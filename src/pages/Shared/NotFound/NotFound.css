@@ -1,0 +1,11 @@
+.not-found-container{
+    text-align: center;
+    color: blue;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 800;
+
+}
+.not-found-container img{
+    width: 400px;
+    height: 200px;
+}
