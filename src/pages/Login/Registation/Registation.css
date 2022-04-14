@@ -12,9 +12,23 @@
   background-color: aqua;
  
 }
-.form-control input{
+.form-control input:not([type=checkbox]){
     width: 90%;
     margin: 20px;
     padding: 10px;
     border: none;
+}
+.check-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+}
+.check-box input{
+    width: 3%;
+}
+.check-box label{
+  width: 97%;
+  
 }

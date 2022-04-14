@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import './Registation.css'
 import SocialShare from '../SocialShare/SocialShare';
 const Registation = () => {
@@ -11,28 +11,37 @@ const Registation = () => {
         user,
         loading,
         error,
-      ] = useCreateUserWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification:true});
 
-   const navigate = useNavigate()
+    const [updateProfile, updating, error1] = useUpdateProfile(auth)
 
+    const navigate = useNavigate()
+    const [agree, setAgree] = useState(false)
 
-    const handleNavigateLogin = event =>{
-        navigate ('/login')
+    
+
+    const handleNavigateLogin = event => {
+        navigate('/login')
     }
 
-    const handleRegister= event =>{
+    const handleRegister = async(event) => {
         event.preventDefault()
 
         const name = event.target.text.value
         const email = event.target.email.value
-        const password =event.target.password.value
+        const password = event.target.password.value
 
         // console.log(event.target.text.value)
+            await createUserWithEmailAndPassword(email, password)
+            await updateProfile({ displayName:name });
+          alert('Updated profile');
 
-        createUserWithEmailAndPassword(email,password)
+          navigate('/login')
+        
+       
     }
 
-    if(user){
+    if (user) {
         navigate('/login')
     }
     return (
@@ -45,13 +54,25 @@ const Registation = () => {
                 <br />
                 <input type="password" name="password" id="" placeholder='Your password' required />
                 <br />
-                <input type="submit" value="Register"  />
+
+                <div className='check-box'>
+                    <input onClick={()=>setAgree(!agree)}  type="checkbox" name='terms' id='terms' />
+                    
+                        <label htmlFor="terms" className={agree ? "text-primary" : 'text-danger'}>Accept Car Service Terms And Condition</label>
+                    
+                </div>
+
+                <br />
+                <input
+                disabled={!agree}
+                 type="submit" value="Register" />
 
                 <p>Already have an account? <Link to='/login' className='tex-danger pe-auto text-decoration-none' onClick={handleNavigateLogin}>Login Now</Link></p>
+
             </form>
             <SocialShare></SocialShare>
         </div>
-      
+
     );
 };
 

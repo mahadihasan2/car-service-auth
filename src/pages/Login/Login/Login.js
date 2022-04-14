@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import SocialShare from '../SocialShare/SocialShare';
@@ -12,6 +12,10 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation()
     let from = location.state?.from?.pathname || "/";
+
+    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(
+        auth
+      );
 
     const [
         signInWithEmailAndPassword,
@@ -40,9 +44,16 @@ const Login = () => {
         
     }
 
+    const handleResetPassword = async() =>{
+        const email = emailRef.current.value 
+        await sendPasswordResetEmail(email);
+        alert('Sent email');
+
+    }
+
     if (error) {
         errorElement = <div>
-            <p className='text-danger'>Halar pula age Registetion kor</p>
+            <p className='text-danger text-center'>Halar pula age Registetion kor</p>
         </div>
 
     }
@@ -62,9 +73,11 @@ const Login = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control ref={passwordRef} type="password" placeholder="Password"  required/>
                 </Form.Group>
-                <input type="submit" value="Submit"  />
+                <input type="submit" value="Login"  />
 
                 <p>welcome to car website? <Link to='/register' className='tex-danger pe-auto text-decoration-none' onClick={handleNavigateRegister}>Resister Now</Link></p>
+
+                <p>Forget Password? <Link to='/register' className='tex-danger pe-auto text-decoration-none' onClick={handleResetPassword}>Rset Password</Link></p>
                 
             </Form>
              {errorElement}
