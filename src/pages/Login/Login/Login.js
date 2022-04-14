@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import SocialShare from '../SocialShare/SocialShare';
 import './Login.css'
 const Login = () => {
     const emailRef = useRef('')
@@ -18,7 +19,7 @@ const Login = () => {
         loading,
         error,
       ] = useSignInWithEmailAndPassword(auth);
-
+  let errorElement;
 
     const handleFromSubmit = event =>{
         event.preventDefault()
@@ -39,6 +40,13 @@ const Login = () => {
         
     }
 
+    if (error) {
+        errorElement = <div>
+            <p className='text-danger'>Halar pula age Registetion kor</p>
+        </div>
+
+    }
+
     return (
         <div className='container'>
             <h2 className='from-text'>Please Login</h2>
@@ -57,7 +65,10 @@ const Login = () => {
                 <input type="submit" value="Submit"  />
 
                 <p>welcome to car website? <Link to='/register' className='tex-danger pe-auto text-decoration-none' onClick={handleNavigateRegister}>Resister Now</Link></p>
+                
             </Form>
+             {errorElement}
+            <SocialShare></SocialShare>
             
         </div>
     );
