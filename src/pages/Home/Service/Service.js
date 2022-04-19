@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import './Service.css'
 const Service = ({service}) => {
@@ -9,6 +10,9 @@ const Service = ({service}) => {
     }
     return (
         <div  className='service-container'>
+            <Helmet>
+                <title>service- car-service</title>
+            </Helmet>
             <img src={img} alt="" />
             <h2>Name: {name}</h2>
             <p>Price: {price}</p>

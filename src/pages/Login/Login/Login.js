@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import SocialShare from '../SocialShare/SocialShare';
@@ -60,6 +61,9 @@ const Login = () => {
 
     return (
         <div className='container'>
+            <Helmet>
+                <title>Login-car service</title>
+            </Helmet>
             <h2 className='from-text'>Please Login</h2>
 
 
